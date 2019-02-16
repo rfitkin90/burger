@@ -6,5 +6,5 @@ DROP TABLE IF EXISTS burgers;
 CREATE TABLE burgers (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     burger_name VARCHAR(40) NOT NULL,
-    devoured bit NOT NULL
+    devoured BOOLEAN DEFAULT FALSE
 );
