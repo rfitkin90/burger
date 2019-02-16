@@ -14,26 +14,26 @@ router.get('/api/burgers', function (req, res) {
 
 // add a burger
 router.post('/api/burgers', function (req, res) {
-   console.log(res);
-   console.log(req);
+  // console.log(res);
+   console.log(req.body);
    burger.insertOne(req.body.burgerName, function (data) {
       console.log(data);
       res.json({ id: data.insertId });
    });
 });
-/*
-QUESTIONS
-How do I console log here to see what the req, res, and data are?
-Where is this posting to? Isn't /api/burgers some arbitrary route name I invented?
-*/
 
+router.put('/api/burgers/:id', function (req, res) {
+   res.send('user ' + req.params.id);
+ });
+ 
 
 // devour a burger
-router.put('api/burgers/:name', function (req, res) {
-   burger.updateOne(req.body.burgerName, function (data) {
-      res.status(200).end();
-   });
-});
+// router.put('api/burgers/:id', function (req, res) {
+//    console.log(req.params.id);
+//    burger.updateOne(req.body.id, function (data) {
+//       res.status(200).end();
+//    });
+// });
 
 // send all burgers to index file
 router.get('/', function (req, res) {

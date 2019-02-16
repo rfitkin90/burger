@@ -5,10 +5,10 @@ var orm = {
    // create a burger
    insertOne: function (burgerName, cb) {
       var queryString = `
-         INSERT INTO burgers (burger_name, devoured)
-         VALUES (${burgerName}, false)
+         INSERT INTO burgers (burger_name)
+         VALUES (?)
       `;
-      connection.query(queryString, function (err, result) {
+      connection.query(queryString, burgerName, function (err, result) {
          if (err) throw err;
          cb(result);
       });
@@ -24,13 +24,13 @@ var orm = {
       });
    },
    // devour a burger
-   updateOne: function (burgerName, cb) {
+   updateOne: function (id, cb) {
       var queryString = `
          UPDATE burgers
-         SET devoured = false
-         WHERE burger_name = ${burgerName}
+         SET devoured = true
+         WHERE id = ?
       `;
-      connection.query(queryString, function (err, result) {
+      connection.query(queryString, id, function (err, result) {
          if (err) throw err;
          cb(result);
       });
