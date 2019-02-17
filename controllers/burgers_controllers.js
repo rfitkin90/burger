@@ -4,6 +4,16 @@ var router = express.Router();
 
 // create routes
 
+// ------------------- html route(s) --------------------
+// index page
+router.get('/', function (req, res) {
+   burger.selectAll(function (data) {
+      res.render('index', { burgers: data });
+   });
+});
+
+// ------------------- api routes -------------------
+
 // check all burgers in json
 router.get('/api/burgers', function (req, res) {
    console.log(res);
@@ -14,31 +24,25 @@ router.get('/api/burgers', function (req, res) {
 
 // add a burger
 router.post('/api/burgers', function (req, res) {
-  // console.log(res);
+   // console.log(res);
    console.log(req.body);
-   burger.insertOne(req.body.burgerName, function (data) {
-      console.log(data);
-      res.json({ id: data.insertId });
+   console.log(`req.body.burgername: ${req.body.name}`);
+   burger.insertOne(req.body.name, function (data) {
+      res.json({ burgers: data });
    });
 });
 
+// update burger(devour it)
 router.put('/api/burgers/:id', function (req, res) {
-   res.send('user ' + req.params.id);
- });
- 
+   burger.updateOne(req.params.id, function (data) {
+      res.json({ burgers: data });
+   });
+});
 
-// devour a burger
-// router.put('api/burgers/:id', function (req, res) {
-//    console.log(req.params.id);
-//    burger.updateOne(req.body.id, function (data) {
-//       res.status(200).end();
-//    });
-// });
-
-// send all burgers to index file
-router.get('/', function (req, res) {
-   burger.selectAll(function (data) {
-      res.render('index', { burgers: data });
+// delete a burger
+router.delete('/api/burgers/:id', function (req, res) {
+   burger.delete(req.params.id, function (data) {
+      res.json({ burgers: data });
    });
 });
 

@@ -7,11 +7,6 @@ $(document).ready(function () {
          name: $('#burg-name-input').val().trim()
       }
 
-      // $.post("/api/burgers", { data: newBurg }, function (result) {
-      //    console.log('created new burger');
-      //    location.reload();
-      // });
-
       $.ajax("/api/burgers", {
          type: "POST",
          data: newBurg
@@ -27,26 +22,36 @@ $(document).ready(function () {
 
    $('.devour-btn').on('click', function (e) {
       e.preventDefault();
-      console.log('hello world');
       var id = $(this).attr('data-id');
       var newBurgState = {
          devoured: true
       };
 
-      $.ajax("/api/burgers/", {
+      $.ajax("/api/burgers/" + id, {
          type: "PUT",
-         data: newBurgState
+         body: newBurgState
       }).then(
          function () {
-            console.log("created new burg");
+            console.log(`devoured burg with id: ${id}`);
             // Reload the page to get the updated list
             location.reload();
          }
       );
-      // $.put(`api/burgers/${id}`, { data: newBurgState }, function (result) {
-      //    console.log("burger was eaten");
-      //    location.reload();
-      // })
+   })
+
+   $('.discard-btn').on('click', function (e) {
+      e.preventDefault();
+      var id = $(this).attr('data-id');
+
+      $.ajax("/api/burgers/" + id, {
+         type: "DELETE"
+      }).then(
+         function () {
+            console.log(`devoured burg with id: ${id}`);
+            // Reload the page to get the updated list
+            location.reload();
+         }
+      );
    })
 
 });

@@ -1,89 +1,72 @@
-<h2>Tasty Burgers</h2>
-<ul>
-   {{#each burgers}}
-   {{#unless devoured}}
-   <li>
-      <p>ID: {{this.id}}</p>
-      <p>Name: {{this.burger_name}}</p>
-      <p>Devoured: {{this.devoured}}</p>
-      <button class="devour-btn" data-id="{{this.id}}">Devour burg</button>
-   </li>
-   {{/unless}}
-   {{/each}}
-</ul>
+<div class="jumbotron">
+   <h1>Eat Some Burgs</h1>
+   <span>Add a burger then devour it.</span><br>
+   <span>(Dont forget to throw away your trash)</span>
+</div>
+<div class="container">
+   <div class="row">
+      <div class="col-md-4">
 
-<h2>Eaten Burgers</h2>
-<ul>
-   {{#each burgers}}
-   {{#if devoured}}
-   <li>
-      <p>ID: {{this.id}}</p>
-      <p>Name: {{this.burger_name}}</p>
-      <p>Devoured: {{this.devoured}}</p>
-   </li>
-   {{/if}}
-   {{/each}}
-</ul>
+         <div class="card">
+            <div class="card-header">
+               <h2>Tasty Burgers</h2>
+            </div>
+            <div class="card-body" id="tasty-burgers-body">
+               {{#each burgers}}
+               {{#unless devoured}}
+               <div class="card burger-card">
+                  <div class="card-header">
+                     <span>{{this.burger_name}}</span>
+                  </div>
+                  <div class="card-body">
+                     <button class="devour-btn btn btn-primary" data-id="{{this.id}}">Devour burg</button>
+                  </div>
+               </div>
+               {{/unless}}
+               {{/each}}
+            </div>
+         </div>
+      </div>
 
-<h2>Add a burger</h2>
-<form class="add-burger">
-   <div class="form-group">
-      <label for="burg-name-input">Burger Name:</label>
-      <input type="text" id="burg-name-input" name="name">
+      <div class="col-md-4">
+
+         <div class="card">
+            <div class="card-header">
+               <h2>Eaten Burgers</h2>
+            </div>
+            <div class="card-body">
+               {{#each burgers}}
+               {{#if devoured}}
+               <div class="card burger-card">
+                  <div class="card-header">
+                     <span>{{this.burger_name}}</span>
+                  </div>
+                  <div class="card-body">
+                     <button class="discard-btn btn btn-primary" data-id="{{this.id}}">Discard trash</button>
+                  </div>
+               </div>
+               {{/if}}
+               {{/each}}
+            </div>
+         </div>
+      </div>
+
+
+      <div class="col-md-4">
+         <div class="card">
+            <div class="card-header">
+               <h2>Add a Burger</h2>
+            </div>
+            <div class="card-body">
+               <form class="add-burger">
+                  <div class="form-group">
+                     <label for="burg-name-input">Burger Name:</label>
+                     <input type="text" id="burg-name-input" name="name">
+                  </div>
+                  <button class="btn btn-primary" type="button" id="submit-burger">Add burger</button>
+               </form>
+            </div>
+         </div>
+      </div>
    </div>
-   <button type="button" id="submit-burger">Add burger</button>
-</form>
-
-<script>
-   $(document).ready(function () {
-
-      $('#submit-burger').on('click', function (e) {
-         e.preventDefault();
-
-         var newBurg = {
-            name: $('#burg-name-input').val().trim()
-         }
-
-         // $.post("/api/burgers", { data: newBurg }, function (result) {
-         //    console.log('created new burger');
-         //    location.reload();
-         // });
-
-         $.ajax("/api/burgers", {
-            type: "POST",
-            data: newBurg
-         }).then(
-            function () {
-               console.log("created new burg");
-               // Reload the page to get the updated list
-               location.reload();
-            }
-         );
-
-      });
-
-      $('.devour-btn').on('click', function (e) {
-         e.preventDefault();
-         var id = $(this).attr('data-id');
-         var newBurgState = {
-            devoured: true
-         };
-
-         $.ajax("/api/burgers/" + id, {
-            type: "PUT",
-            body: newBurgState
-         }).then(
-            function () {
-               console.log("created new burg");
-               // Reload the page to get the updated list
-               location.reload();
-            }
-         );
-         // $.put(`api/burgers/${id}`, { data: newBurgState }, function (result) {
-         //    console.log("burger was eaten");
-         //    location.reload();
-         // })
-      })
-
-   });
-</script>
+</div>
