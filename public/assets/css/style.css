@@ -46,7 +46,12 @@ html,body {
 }
 
 .burger-card .card-body {
-   background-color: rgb(20, 20, 20)
+   background-color: rgb(20, 20, 20);
+}
+
+#tasty-burgers-body, #eaten-burgers-body {
+   max-height: 480px;
+   overflow-y: scroll;
 }
 
 .jumbotron, .btn, .card-header {
