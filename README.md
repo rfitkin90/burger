@@ -1,5 +1,7 @@
 # burger
 
+Uses MySQL to read, add, and remove data from a database in the form of creating and eating burgers and discarding the trash.
+
 ### User Instructions
 
 1. Enter a burger name and click the "Add burger" button to add it to the "Tasty Burgers" panel.
